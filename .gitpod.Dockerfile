@@ -32,10 +32,16 @@ RUN gpg2 --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E206
 
 # Setup PostgreSQL server for user gitpod
 USER postgres
-RUN /etc/init.d/postgresql start && \
-    psql --command "CREATE USER gitpod WITH SUPERUSER PASSWORD 'gitpod';" && \
-    createdb -O gitpod -D $PGDATA gitpod && \
-    echo "host all all 0.0.0.0/0 md5" >> /etc/postgresql/11/main/pg_hba.conf && \
+
+# Start PostgreSQL service
+RUN service postgresql start
+
+# Create PostgreSQL user and database
+RUN psql --command "CREATE USER gitpod WITH SUPERUSER PASSWORD 'gitpod';" && \
+    createdb -O gitpod -D $PGDATA gitpod
+
+# Configure PostgreSQL to allow remote connections
+RUN echo "host all all 0.0.0.0/0 md5" >> /etc/postgresql/11/main/pg_hba.conf && \
     echo "listen_addresses='*'" >> /etc/postgresql/11/main/postgresql.conf
 
 # Expose the PostgreSQL port
