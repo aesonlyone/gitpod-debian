@@ -3,7 +3,7 @@ FROM debian:10
 # Set environment variables
 ENV HOME=/home/gitpod
 ENV PGDATA="/workspace/.pgsql/data"
-ENV GEM_HOME=/workspace/.rvm
+ENV GEM_HOME="/workspace/.rvm"
 
 # Update sources and install necessary packages
 RUN printf "deb http://deb.debian.org/debian buster main contrib non-free\ndeb http://security.debian.org/debian-security buster/updates main\ndeb http://deb.debian.org/debian buster-updates main" > /etc/apt/sources.list && \
