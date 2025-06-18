@@ -1,2 +1,6 @@
 image:
   file: .gitpod.Dockerfile
+
+tasks:
+  - init: sudo apt-get update && sudo apt-get install -yq git
+  - command: bash
